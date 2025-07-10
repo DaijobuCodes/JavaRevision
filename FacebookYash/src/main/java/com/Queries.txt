@@ -1,0 +1,7 @@
+Queries:
+
+1) View Posts and Comments
+select posts.pid, posts.uid, posts.username, posts.post, comments.cid, appusers.username, comments.comment, comments.time from posts inner join comments on posts.pid = comments.pid
+inner join appusers on comments.uid = appusers.uid group by posts.pid, comments.cid;
+
+2)
