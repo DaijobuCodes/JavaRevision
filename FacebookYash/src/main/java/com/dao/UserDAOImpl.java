@@ -13,19 +13,19 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public int addUser(User user) {
         try {
-            String sql = "insert into appusers(username, password, email) values(?, ?, ?)";
+            String sql = "insert into appusers(name, username, password, email) values(?, ?, ?, ?)";
             PreparedStatement preparedStatement = DBUtil.getConnection().prepareStatement(sql);
-            preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getEmail());
-            int res = 0;
-            res = preparedStatement.executeUpdate();
-            return res;
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getUsername());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setString(4, user.getEmail());
+            return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
     }
+
 
     @Override
     public int getUserID(String username) {
@@ -38,6 +38,7 @@ public class UserDAOImpl implements UserDAO{
             while (resultSet.next()) {
                 id = resultSet.getInt(1);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -80,13 +81,15 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public boolean checkPassword(String username, String password) {
-        boolean match = false;
         try {
             Statement statement = DBUtil.getConnection().createStatement();
-            String sql = "select password from appusers where username='" + username + "'";
-            ResultSet resultSet = statement.executeQuery(sql);
+            String sql = "SELECT password FROM appusers WHERE username=?";
+            PreparedStatement ps = DBUtil.getConnection().prepareStatement(sql);
+            ps.setString(1, username);
+            ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                if(password.equals(resultSet.getString(1))){
+                System.out.println(username + password);
+                if (password.equals(resultSet.getString(1))) {
                     return true;
                 }
             }
@@ -95,4 +98,5 @@ public class UserDAOImpl implements UserDAO{
         }
         return false;
     }
+
 }

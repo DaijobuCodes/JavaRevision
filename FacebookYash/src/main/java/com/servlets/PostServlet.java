@@ -1,7 +1,11 @@
 package com.servlets;
 
+import com.dao.PostDAO;
+import com.dao.PostDAOImpl;
 import com.dao.UserDAO;
 import com.dao.UserDAOImpl;
+import com.model.Post;
+import com.model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,24 +16,25 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/Login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/Postserv")
+public class PostServlet extends HttpServlet {
     UserDAO userDAO = new UserDAOImpl();
+    PostDAO postDAO = new PostDAOImpl();
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
 
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+        String content = req.getParameter("content");
+
         HttpSession session = req.getSession(true);
 
-        if(userDAO.checkPassword(username, password)){
-            session.setAttribute("user", username);
-            resp.sendRedirect(resp.encodeRedirectURL("home.jsp"));
-        } else {
-            resp.sendRedirect("http://localhost:8080/FacebookYash/");
-        }
+        String username = (String)session.getAttribute("user");
+        int userid = userDAO.getUserID(username);
+
+        postDAO.addPost(new Post(content), userid, username);
+
+        resp.sendRedirect(resp.encodeRedirectURL("home.jsp"));
 
     }
 }

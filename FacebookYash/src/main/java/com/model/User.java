@@ -2,12 +2,13 @@ package com.model;
 
 public class User {
     private int userID;
+    private String name;
     private String username;
     private String password;
     private String email;
 
-    public User(int id, String username, String password, String email) {
-        this.userID = id;
+    public User(String name, String username, String password, String email) {
+        this.name = name;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -21,6 +22,14 @@ public class User {
 
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername() {
