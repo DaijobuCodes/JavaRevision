@@ -11,6 +11,8 @@
 <head><title>Post Viewer</title></head>
 <body>
 <h2>Posts and Comments</h2>
+<a href="home.jsp">Go Back!</a><br>
+<a href="comment.jsp">Wanna comment<a>
 
 <%
     for (Map<String, String> row : rows) {
@@ -18,11 +20,15 @@
 
         if (!pid.equals(lastPid)) {
 %>
-    <div style="margin-top:20px; padding:10px; border:1px solid #ccc;">
-        <h3><%= row.get("postUser") %> posted:</h3>
-        <p><%= row.get("post") %></p>
-        <small>Posted on: <%= row.get("postTime") %></small>
         <hr>
+        <h3><%=pid %>. <%= row.get("postUser") %> posted:</h3>
+        <h2><%= row.get("post") %></h2>
+        <small>Posted on: <%= row.get("postTime") %></small>
+        <br>
+        <%
+            int comment_count = postDAO.getCommentCount(Integer.parseInt(pid));
+        %>
+        <h4>This post has <%=comment_count %> comment/s.</h4>
         <h4>Comments:</h4>
 <%
             lastPid = pid;

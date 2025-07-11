@@ -7,7 +7,6 @@ public class Comment {
     private int postID;
     private int userID;
     private String commentContent;
-
     private String commenterName;
     private Timestamp time;
 
@@ -16,14 +15,6 @@ public class Comment {
 
     public Timestamp getTime() { return time; }
     public void setTime(Timestamp time) { this.time = time; }
-
-
-    public Comment(String commentContent) {
-        this.commentContent = commentContent;
-    }
-
-    public Comment() {
-    }
 
     public Comment(int postID, int userID, String commentContent) {
         this.postID = postID;

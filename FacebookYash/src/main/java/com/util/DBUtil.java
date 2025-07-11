@@ -13,7 +13,7 @@ public class DBUtil {
             if (connection == null || connection.isClosed()) {
                 Class.forName("org.h2.Driver");
                 connection = DriverManager.getConnection(
-                        "jdbc:h2:C:\\Users\\Yash\\Desktop\\Java\\yashdb", "sa", ""
+                        "jdbc:h2:C:\\Users\\S60554\\Desktop\\JavaRevision-main\\yashdb", "sa", ""
                 );
             }
         } catch (SQLException e) {
@@ -30,7 +30,7 @@ public class DBUtil {
             System.out.println("Driver Loaded.");
 
             connection = DriverManager.getConnection(
-                    "jdbc:h2:C:\\Users\\Yash\\Desktop\\Java\\yashdb", "sa", ""
+                    "jdbc:h2:C:\\Users\\S60554\\Desktop\\JavaRevision-main\\yashdb", "sa", ""
             );
             System.out.println("Established Connection.");
         } catch (ClassNotFoundException e) {

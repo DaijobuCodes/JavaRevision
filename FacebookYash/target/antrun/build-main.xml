@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="maven-antrun-" default="main">
   <target name="main">
-    <copy file="C:\Users\Yash\Desktop\Java\JavaRevision\FacebookYash\target/FacebookYash.war" todir="C:\Users\Yash\Desktop\apache-tomcat-11.0.9\apache-tomcat-11.0.9\webapps" overwrite="true" />
+    <copy file="C:\Users\S60554\Desktop\JavaRevision-main\FacebookYash\target/FacebookYash.war" todir="C:\Users\S60554\Desktop\apache-tomcat-11.0.9\webapps" overwrite="true" />
   </target>
 </project>

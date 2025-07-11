@@ -52,8 +52,8 @@ public class PostDAOImpl implements PostDAO{
         String sql = "SELECT p.pid, p.username AS postUser, p.post, p.time AS postTime, " +
                 "c.comment, c.time AS commentTime, a.username AS commentUser " +
                 "FROM posts p " +
-                "INNER JOIN comments c ON p.pid = c.pid " +
-                "INNER JOIN appusers a ON c.uid = a.uid " +
+                "LEFT JOIN comments c ON p.pid = c.pid " +
+                "LEFT JOIN appusers a ON c.uid = a.uid " +
                 "ORDER BY p.pid, c.time";
 
         try (PreparedStatement ps = DBUtil.getConnection().prepareStatement(sql);
@@ -64,9 +64,9 @@ public class PostDAOImpl implements PostDAO{
                 row.put("postUser", rs.getString("postUser"));
                 row.put("post", rs.getString("post"));
                 row.put("postTime", rs.getString("postTime"));
-                row.put("commentUser", rs.getString("commentUser"));
-                row.put("comment", rs.getString("comment"));
-                row.put("commentTime", rs.getString("commentTime"));
+                row.put("commentUser", rs.getString("commentUser"));  // might be null
+                row.put("comment", rs.getString("comment"));          // might be null
+                row.put("commentTime", rs.getString("commentTime"));  // might be null
                 resultList.add(row);
             }
         } catch (SQLException e) {
@@ -76,4 +76,34 @@ public class PostDAOImpl implements PostDAO{
         return resultList;
     }
 
+
+    @Override
+    public int getCommentCount(int pid) {
+        String sql = "select count(cid) from comments where pid = ?";
+        try (PreparedStatement preparedStatement = DBUtil.getConnection().prepareStatement(sql)) {
+            preparedStatement.setInt(1, pid);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public int getPostCount(int uid) {
+            String sql = "SELECT COUNT(pid) FROM posts WHERE uid = ?";
+            try (PreparedStatement preparedStatement = DBUtil.getConnection().prepareStatement(sql)) {
+                preparedStatement.setInt(1, uid);
+                ResultSet rs = preparedStatement.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return 0;
+    }
 }

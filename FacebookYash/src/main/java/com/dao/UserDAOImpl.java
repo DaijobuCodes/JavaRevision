@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Objects;
 
 public class UserDAOImpl implements UserDAO{
     @Override
@@ -43,40 +42,6 @@ public class UserDAOImpl implements UserDAO{
             e.printStackTrace();
         }
         return id;
-    }
-
-    @Override
-    public String getUserEmail(String username){
-        String email = "";
-        try {
-            Statement statement = DBUtil.getConnection().createStatement();
-            String sql = "select email from appusers where username='" + username + "'";
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()) {
-                email = resultSet.getString(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return email;
-    }
-
-    @Override
-    public boolean isExist(String username) {
-        boolean res = false;
-        try {
-            Statement statement = DBUtil.getConnection().createStatement();
-            String sql = "select username from appusers where username='" + username + "'";
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                res = true;
-                return res;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return res;
     }
 
     @Override

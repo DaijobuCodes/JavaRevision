@@ -10,4 +10,6 @@ public interface PostDAO {
     int addPost(Post post, int uid, String username);
     int addComment(Comment comment);
     List<Map<String, String>> getPostCommentRows();
+    int getCommentCount(int pid);
+    int getPostCount(int uid);
 }
